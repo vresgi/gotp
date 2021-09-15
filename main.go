@@ -9,24 +9,6 @@ import (
 	"time"
 )
 
-func helloHandler(w http.ResponseWriter, req *http.Request) {
-	switch req.Method {
-	case http.MethodGet:
-		fmt.Fprintf(w, "Hello world")
-	case http.MethodPost:
-		if err := req.ParseForm(); err != nil {
-			fmt.Println("Something went bad")
-			fmt.Fprintln(w, "Something went bad")
-			return
-		}
-		for key, value := range req.PostForm {
-			fmt.Println(key, "=>", value)
-		}
-
-		fmt.Fprintf(w, "Information received: %v\n", req.PostForm)
-	}
-}
-
 func timeHandler(w http.ResponseWriter, req *http.Request) {
 	if req.Method == http.MethodGet {
 		date := time.Now()
@@ -81,7 +63,6 @@ func entriesHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/", timeHandler)
 	http.HandleFunc("/add", addHandler)
 	http.HandleFunc("/entries", entriesHandler)
